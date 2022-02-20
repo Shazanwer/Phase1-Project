@@ -16,7 +16,7 @@ public class AmazonSearchClass {
 
 		driver.get("https://www.amazon.in");
 
-//		driver.manage().window().maximize();
+		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
 
 		WebElement SearchText = driver.findElement(By.id("twotabsearchtextbox"));
@@ -25,21 +25,17 @@ public class AmazonSearchClass {
 		WebElement SearchBtn = driver.findElement(By.id("nav-search-submit-button"));
 		SearchBtn.click();
 
-		List<WebElement> SearchResult = driver.findElements(By.xpath(
-				"//div[@data-component-type='s-search-result']//span[@class ='a-size-medium a-color-base a-text-normal']"));
+		List<WebElement> SearchResult = driver
+				.findElements(By.xpath("//span[@class ='a-size-medium a-color-base a-text-normal']"));
 
-//		WebElement Price = driver.findElement(By.xpath("//div[@data-component-type='s-search-result']//span[@class ='a-price']"));
+		List<WebElement> price = driver.findElements(By.xpath("//span[@class ='a-price']"));
 
 		for (int count = 0; count < SearchResult.size(); count++) {
-			count = count + 2;
-			WebElement result = driver.findElement(By.xpath("//div[@data-cel-widget='search_result_" + count
-					+ "']//span[@class ='a-size-medium a-color-base a-text-normal']"));
-			WebElement price = driver.findElement(
-					By.xpath("//div[@data-cel-widget='search_result_" + count + "']//span[@class ='a-price']"));
-			if (result.getText().toLowerCase().contains("iphone")) {
-				System.out.println(count + "." + result.getText() + "\n" + "Price: " + price.getText());
+
+			if (SearchResult.get(count).getText().toLowerCase().contains("iphone")) {
+				System.out.println((count + 1) + ". " + SearchResult.get(count).getText() + "\n" + "Price: "
+						+ price.get(count).getText());
 			}
-			count = count - 2;
 		}
 
 		driver.close();
